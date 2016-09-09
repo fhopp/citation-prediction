@@ -47,13 +47,13 @@ f = open(path_author_collaboration_network, 'r', encoding="Latin-1")
 
 author_collaboration_network = nx.Graph()
 
-for v in top100_sorted_author_citations.keys():
+for v in sorted_author_citations.keys():
     author_collaboration_network.add_node(v)
 
 for line in f:
     line_content = line.split("\n")
     name_author, name_coauthor = line_content[0].split("==>")
-    if name_author in top100_sorted_author_citations.keys() and name_coauthor in top100_sorted_author_citations.keys():
+    if name_author in top100_sorted_author_citations.keys() or name_coauthor in top100_sorted_author_citations.keys():
         author_collaboration_network.add_edge(name_author, name_coauthor)
         
 
@@ -74,8 +74,9 @@ plt.show()  # display
 print("PLOTTING")
 keys = list(sorted_author_citations.keys())
 values = sorted(sorted_author_citations.values(), reverse=True)
-print(type(keys))
+
 x = range(len(keys))
 plt.figure(1,figsize=(10,10))
 plt.scatter(x, values)
+
 
